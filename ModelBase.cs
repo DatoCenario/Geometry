@@ -66,6 +66,8 @@ namespace Geometry
             _normalsIndexes = normalsIndexes;
             Pivot = pivot;
             Texture = texture;
+            
+            UpdateGlobalVertices();
         }
 
         public ModelBase(Vector3 center, Vector3[] vertices, int[] indexes)
