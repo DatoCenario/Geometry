@@ -93,8 +93,8 @@ namespace Geometry
         public  Vector3 RootPosition { get; }
         public  float _rotationCoeficient => (float)Math.PI * FlatnessPercents / 100;
 
-        public TreeGenerator(int initialFrequency, float initialLength, float initialRadius,
-            float flatnessPercents, int branchesCount, Vector3 start)
+        public TreeGenerator(Vector3 start, int initialFrequency, float initialLength, 
+            float initialRadius, float flatnessPercents, int branchesCount)
         {
             InitialFrequency = initialFrequency;
             InitialLength = initialLength;
