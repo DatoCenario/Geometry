@@ -10,26 +10,40 @@ namespace Geometry
     {
         static void Main(string[] args)
         {
-            var tree = TreeGenerator.GenerateTree(Vector3.Zero, 20, 100, 20000, 30);
-            tree.SaveToObjFile("./Models/tree2.obj");
+            // var gen = new ThorGenerator(Vector3.Zero, 1000, 200, 1000, 200);
+            // var polys = gen.Generate().ToList();
+            // var model = ModelTools.MakeModelFromPolys(Vector3.Zero, polys);
+            // model.SaveToObjFile("./Models/Thor.obj");
+            // var node1 = new CircleCircuitNode(Pivot.BasePivot(Vector3.Zero), 100, 20);
+            // var node2 = new CircleCircuitNode(Pivot.BasePivot(new Vector3(0,0,100)), 200, 10);
+            // node1.ConnectToNode(node2);
+            // var p = node1.DeployCircuitGraphConnections().ToList();
+            // var model = ModelTools.MakeModelFromPolys(Vector3.Zero, p);
+            // model.SaveToObjFile("./Models/Test.obj");
 
-            var rand = new Random();
-            var randomPoints = Enumerable.Range(0, 1000)
-                .Select(p => new Vector3(rand.Next(0, 1000),rand.Next(0, 1000),rand.Next(0, 1000)))
-                .ToArray();
+            // var treesPolys = Enumerable.Range(0, 5)
+            //     .SelectMany(t => Enumerable.Range(0, 5)
+            //     .SelectMany(p => GetRandomGenerator().Generate()))
+            //     .ToList();
 
-            var convexHull = ModelTools.GetModelConvexHull(randomPoints);
+            // var model = ModelTools.MakeModelFromPolys(Vector3.Zero, treesPolys);
+            // model.Rotate((float)Math.PI / 2, AxisType.XAxis);
 
-            convexHull.SaveToObjFile("./Models/convex.obj");
+            // model.SaveToObjFile("./Models/Forest.obj");
 
-            var funct = new Function(Vector3.Zero, (a,b) => 
-                (float)Math.Sin(10 * (a * b) / (a + b)) * 2, 0, 0, 10, 10, 0.1f);
-            funct.SaveToObjFile("./Models/function.obj");
-            var thor = new Thor(Vector3.Zero, 100, 40, 2000, 600);
-            thor.SaveToObjFile("./Models/thor.obj");
-            var cube = new Cube(Vector3.Zero, 100);
-            cube.SaveToObjFile("./Models/model.obj");
-            Console.Read();
+            var gen = new TreeGenerator(70, 100, 40, 15f, 3000, Vector3.Zero);
+            var polys = gen.Generate().ToList();
+            var treeModel = ModelTools.MakeModelFromPolys(Vector3.Zero, polys);
+            treeModel.Rotate((float)Math.PI / 2, AxisType.XAxis);
+            treeModel.SaveToObjFile("./Models/myTree.obj");
+        }
+
+        static Random rand = new Random();
+
+        static TreeGenerator GetRandomGenerator()
+        {
+            return new TreeGenerator(70, rand.Next(50, 150), rand.Next(15, 60), 6f, rand.Next(1500, 4000),
+                new Vector3(rand.Next(0, 2000), 0, rand.Next(0, 2000)));
         }
     }
 }
