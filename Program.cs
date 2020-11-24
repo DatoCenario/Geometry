@@ -11,6 +11,11 @@ namespace Geometry
         ///Simple usage
         static void Main(string[] args)
         {
+            //Creating cube (YEA, this is the best thing i've ever done)
+            var cube = ModelTools.MakeModelFromPolys(Vector3.Zero, 
+                new CubeGenerator(Vector3.Zero, 100).Generate().ToList());
+            cube.SaveToObjFile("./Models/Cube.obj");
+
             //Creating thor
             var thorGen = new ThorGenerator(Vector3.Zero, 100, 20, 100, 20);
             var polys = thorGen.Generate().ToList();
@@ -24,10 +29,18 @@ namespace Geometry
             model.SaveToObjFile("./Models/Tree.obj");
 
             //Creating serpinsky pyramid
-            var pyrGen = new SerpinskyPyramidGenerator(Vector3.Zero, 8, 100, 100);
+            IRecursiveHandler handler = new SerpinskyPyramidRecursiveHandler(Vector3.Zero, 100, 100, 0);
+            var pyrGen = new SerpinskyGenerator(handler, 5);
             polys = pyrGen.Generate().ToList();
             model = ModelTools.MakeModelFromPolys(Vector3.Zero, polys);
             model.SaveToObjFile("./Models/SP.obj");
+
+            //Creating serpinsky cube
+            handler = new SerpinskyCubeRecursiveHandler(Vector3.Zero, 100, 0);
+            var cubeGen = new SerpinskyGenerator(handler, 5);
+            polys = cubeGen.Generate().ToList();
+            model = ModelTools.MakeModelFromPolys(Vector3.Zero, polys);
+            model.SaveToObjFile("./Models/SC.obj");
         }
     }
 }

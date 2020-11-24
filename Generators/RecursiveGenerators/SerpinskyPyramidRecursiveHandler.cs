@@ -31,12 +31,12 @@ namespace Geometry
 
             yield return new SerpinskyPyramidRecursiveHandler(Anchor + new Vector3(_halfSide / 2, -_halfHeight, -_halfSide / 2),
                  _halfHeight, _halfSide, RecursiveDepth + 1);
-            
+
             yield return new SerpinskyPyramidRecursiveHandler(Anchor + new Vector3(-_halfSide / 2, -_halfHeight, _halfSide / 2),
-                 _halfHeight, _halfSide, RecursiveDepth + 1);
+                _halfHeight, _halfSide, RecursiveDepth + 1);
 
             yield return new SerpinskyPyramidRecursiveHandler(Anchor + new Vector3(-_halfSide / 2, -_halfHeight, -_halfSide / 2),
-                 _halfHeight, _halfSide, RecursiveDepth + 1);
+                _halfHeight, _halfSide, RecursiveDepth + 1);
         }
 
         public IEnumerable<Poly> PolysProvider()

@@ -1,0 +1,13 @@
+/media/devil/DATA/CODE/c#/Geometry/bin/Debug/netcoreapp3.1/Geometry
+/media/devil/DATA/CODE/c#/Geometry/bin/Debug/netcoreapp3.1/Geometry.deps.json
+/media/devil/DATA/CODE/c#/Geometry/bin/Debug/netcoreapp3.1/Geometry.runtimeconfig.json
+/media/devil/DATA/CODE/c#/Geometry/bin/Debug/netcoreapp3.1/Geometry.runtimeconfig.dev.json
+/media/devil/DATA/CODE/c#/Geometry/bin/Debug/netcoreapp3.1/Geometry.dll
+/media/devil/DATA/CODE/c#/Geometry/bin/Debug/netcoreapp3.1/Geometry.pdb
+/media/devil/DATA/CODE/c#/Geometry/obj/Debug/netcoreapp3.1/Geometry.csprojAssemblyReference.cache
+/media/devil/DATA/CODE/c#/Geometry/obj/Debug/netcoreapp3.1/Geometry.AssemblyInfoInputs.cache
+/media/devil/DATA/CODE/c#/Geometry/obj/Debug/netcoreapp3.1/Geometry.AssemblyInfo.cs
+/media/devil/DATA/CODE/c#/Geometry/obj/Debug/netcoreapp3.1/Geometry.csproj.CoreCompileInputs.cache
+/media/devil/DATA/CODE/c#/Geometry/obj/Debug/netcoreapp3.1/Geometry.dll
+/media/devil/DATA/CODE/c#/Geometry/obj/Debug/netcoreapp3.1/Geometry.pdb
+/media/devil/DATA/CODE/c#/Geometry/obj/Debug/netcoreapp3.1/Geometry.genruntimeconfig.cache
