@@ -22,6 +22,12 @@ namespace Geometry
             polys = treeGen.Generate().ToList();
             model = ModelTools.MakeModelFromPolys(Vector3.Zero, polys);
             model.SaveToObjFile("./Models/Tree.obj");
+
+            //Creating serpinsky pyramid
+            var pyrGen = new SerpinskyPyramidGenerator(Vector3.Zero, 8, 100, 100);
+            polys = pyrGen.Generate().ToList();
+            model = ModelTools.MakeModelFromPolys(Vector3.Zero, polys);
+            model.SaveToObjFile("./Models/SP.obj");
         }
     }
 }

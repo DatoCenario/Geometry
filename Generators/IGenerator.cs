@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Geometry
 {
-    public interface ICircuitGenerator
+    public interface IGenerator
     {
         IEnumerable<Poly> Generate();
     }

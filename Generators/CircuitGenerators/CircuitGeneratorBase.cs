@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Geometry
 {
-    public abstract class CircuitGeneratorBase : ICircuitGenerator
+    public abstract class CircuitGeneratorBase : IGenerator
     {
         public IEnumerable<Poly> Generate()
         {
