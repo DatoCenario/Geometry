@@ -23,7 +23,7 @@ namespace Geometry
             model.SaveToObjFile("./Models/Thor.obj");
 
             //Creating tree
-            var treeGen = new TreeGenerator(Vector3.Zero, 70, 100, 20, 15f, 2000);
+            var treeGen = new TreeGenerator(Vector3.Zero, TreeConfiguration.BoldTree);
             polys = treeGen.Generate().ToList();
             model = ModelTools.MakeModelFromPolys(Vector3.Zero, polys);
             model.Rotate(-1.57f, AxisType.XAxis);

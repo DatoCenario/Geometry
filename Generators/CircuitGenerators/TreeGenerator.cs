@@ -6,123 +6,29 @@ namespace Geometry
 {
     public class TreeGenerator : CircuitGeneratorBase
     {
-        private int _initialFrequency;
-        private float _initialRadius;
-        private float _initialLength;
-        private int _branchesCount;
-        private float _flatnessPercents;
-        private float _branchinessPercents;
-        private float _lengthDecreasePercents;
-        private float _radiusDecreasePercents;
-        private float _frequencyDecreasePercents;
-        public  Random _random;
-        public  int InitialFrequency
-        {
-            get { return _initialFrequency; }
-            set
-            {
-                _initialFrequency = Math.Max(0, value);
-            }
-        }
-        public  float InitialLength
-        {
-            get { return _initialLength; }
-            set
-            {
-                _initialLength = Math.Max(0, value);
-            }
-        }
-        public  float InitialRadius
-        {
-            get { return _initialRadius; }
-            set
-            {
-                _initialRadius = Math.Max(0, value);
-            }
-        }
-        public  int BranchesCount
-        {
-            get { return _branchesCount; }
-            set
-            {
-                _branchesCount = Math.Max(0, value);
-            }
-        }
-        public  float FlatnessPercents
-        {
-            get { return _flatnessPercents; }
-            set
-            {
-                _flatnessPercents = Math.Min(100, Math.Max(0, value));
-            }
-        }
-        public  float FrequencyDecreasePercents
-        {
-            get { return _frequencyDecreasePercents; }
-            set
-            {
-                _frequencyDecreasePercents = Math.Min(100, Math.Max(0, value));
-            }
-        }
-        public  float LengthDecreasePercents
-        {
-            get { return _lengthDecreasePercents; }
-            set
-            {
-                _lengthDecreasePercents = Math.Min(100, Math.Max(0, value));
-            }
-        }
-        public  float RadiusDecreasePercents
-        {
-            get { return _radiusDecreasePercents; }
-            set
-            {
-                _radiusDecreasePercents = Math.Min(100, Math.Max(0, value));
-            }
-        }
-        public  float BranchinessPercent
-        {
-            get { return _branchinessPercents; }
-            set
-            {
-                 _branchinessPercents = Math.Min(100, Math.Max(0, value));
-            }
-        }
-        private int BranchinessTotal => (int)(BranchesCount * BranchinessPercent / 100);
+        public TreeConfiguration Configuration { get; set; }
+        private int BranchinessTotal => (int)(Configuration.BranchesCount * Configuration.BranchinessPercent / 100);
         public  Vector3 RootPosition { get; }
-        public  float _rotationCoeficient => (float)Math.PI * FlatnessPercents / 100;
+        public  float _rotationCoeficient => (float)Math.PI * Configuration.FlatnessPercents / 100;
+        public Random _random;
 
-        public TreeGenerator(Vector3 start, int initialFrequency, float initialLength, 
-            float initialRadius, float flatnessPercents, int branchesCount)
+        public TreeGenerator(Vector3 start, TreeConfiguration configuration)
         {
-            InitialFrequency = initialFrequency;
-            InitialLength = initialLength;
-            InitialRadius = initialRadius;
-            FlatnessPercents = flatnessPercents;
-            BranchesCount = branchesCount;
+            Configuration = configuration;
             RootPosition = start;
             _random = new Random();
-
-            InitializeDefault();
-        }
-
-        private void InitializeDefault()
-        {
-            BranchinessPercent = 0.3f;
-            FrequencyDecreasePercents = 90;
-            RadiusDecreasePercents = 80;
-            LengthDecreasePercents = 90;
         }
 
         public override IEnumerable<CircuitNodeBase> CircuitGraphProvider()
         {
             var initialPivot = Pivot.BasePivot(RootPosition);
-            var rootNode = new CircleCircuitNode(initialPivot, InitialRadius, InitialFrequency);
+            var rootNode = new CircleCircuitNode(initialPivot, Configuration.InitialRadius, 
+                Configuration.InitialFrequency);
 
             var queue = new Queue<Tuple<CircleCircuitNode, float>>();
-            queue.Enqueue(Tuple.Create(rootNode, InitialLength));
+            queue.Enqueue(Tuple.Create(rootNode, Configuration.InitialLength));
 
-            int branchesCountPassed = BranchesCount;
+            int branchesCountPassed = Configuration.BranchesCount;
 
             while(branchesCountPassed != 0)
             {
@@ -140,8 +46,8 @@ namespace Geometry
                     RotateRandom(pivot);
                     pivot.Move(pivot.ZAxis * length);
 
-                    var newRadius = node.Raduis * RadiusDecreasePercents / 100;
-                    var newFrequency = Math.Max(3, (int)((float)node.Frequency * FrequencyDecreasePercents / 100));
+                    var newRadius = node.Raduis * Configuration.RadiusDecreasePercents / 100;
+                    var newFrequency = Math.Max(3, (int)((float)node.Frequency * Configuration.FrequencyDecreasePercents / 100));
 
                     var newNode = new CircleCircuitNode(
                         pivot, 
@@ -149,7 +55,7 @@ namespace Geometry
                         newFrequency);
 
                     node.ConnectToNode(newNode);
-                    queue.Enqueue(Tuple.Create(newNode, length * LengthDecreasePercents / 100));
+                    queue.Enqueue(Tuple.Create(newNode, length * Configuration.LengthDecreasePercents / 100));
                 }
             }
 
