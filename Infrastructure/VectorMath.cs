@@ -14,12 +14,22 @@ namespace Geometry
             return v1.X * v2.X + v1.Y * v2.Y + v1.Z * v2.Z;
         }
 
+        public static float Dot(Vector2 v1, Vector2 v2)
+        {
+            return v1.X * v2.X + v1.Y * v2.Y;
+        }
+
         public static Vector3 Cross(Vector3 v1, Vector3 v2)
         {
             return new Vector3(v1.Y * v2.Z - v1.Z * v2.Y, -(v1.X * v2.Z - v1.Z * v2.X), v1.X * v2.Y - v1.Y * v2.X);
         }
 
-        public static float AngleBetweenVectors(Vector3 v1, Vector3 v2)
+        public static float Angle(Vector3 v1, Vector3 v2)
+        {
+            return (float)Math.Acos(Dot(v1, v2) / (v1.Length() * v2.Length()));
+        }
+
+        public static float Angle(Vector2 v1, Vector2 v2)
         {
             return (float)Math.Acos(Dot(v1, v2) / (v1.Length() * v2.Length()));
         }
@@ -182,12 +192,48 @@ namespace Geometry
 
             var current = enumerator.Current;
 
+            yield return new Poly(first, previous, current);
+
             while(enumerator.MoveNext())
             {
-                yield return new Poly(first, previous, current);
                 previous = current;
                 current = enumerator.Current;
+                yield return new Poly(first, previous, current);
             }
+        }
+
+        public static float[] GetLineCoefs(Vector2 begin, Vector2 end)
+        {
+            var a = end.Y - begin.Y;
+            var b = begin.X - end.X;
+            var c = begin.Y * end.X - begin.X * end.Y;
+            return new float[] { a, b, c };
+        }
+
+        public static bool AreIntersecting(Vector2 begin1, Vector2 end1, Vector2 begin2, Vector2 end2,
+            out Vector2 intersect)
+        {
+            var begin_end1 = Vector2.Normalize(end1 - begin1);
+            var begin_end2 = Vector2.Normalize(end2 - begin2);
+
+            var length1 = (begin_end1 - begin_end2).Length();
+            var length2 = (begin_end1 + begin_end2).Length();
+
+            if(length1 < 0.01 || length2 < 0.01) 
+            {
+                intersect = Vector2.Zero;
+                return false;
+            }
+
+            var coefs = GetLineCoefs(begin2, end2);
+
+            var val1 = (coefs[0] * begin1.X + coefs[1] * begin1.Y + coefs[2]);
+            var val2 = (coefs[0] * begin_end1.X + coefs[1] * begin_end1.Y);
+
+            var scaleCoef = -val1 / val2;
+            intersect = begin1 + (scaleCoef * begin_end1);
+
+            return true;
         }
     }
 }

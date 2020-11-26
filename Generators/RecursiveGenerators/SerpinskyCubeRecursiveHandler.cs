@@ -10,6 +10,7 @@ namespace Geometry
         public float SideLength { get; }
         public int RecursiveDepth { get; }
         private float _forthSide => SideLength / 4;
+        private CubeGenerator _generator => new CubeGenerator(Center, SideLength);
 
         public SerpinskyCubeRecursiveHandler(Vector3 center, float sideLength, int recursiveDepth)
         {
@@ -32,8 +33,7 @@ namespace Geometry
 
         public IEnumerable<Poly> PolysProvider()
         {
-            var cubeGen = new CubeGenerator(Center, SideLength);
-            return cubeGen.Generate();
+            return _generator.Generate();
         }
     }
 }

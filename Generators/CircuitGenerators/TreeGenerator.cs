@@ -108,7 +108,7 @@ namespace Geometry
 
         private void InitializeDefault()
         {
-            BranchinessPercent = 0.1f;
+            BranchinessPercent = 0.3f;
             FrequencyDecreasePercents = 90;
             RadiusDecreasePercents = 80;
             LengthDecreasePercents = 90;
